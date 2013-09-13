@@ -1,0 +1,52 @@
+<head>
+  <meta charset="utf-8">
+  <title>Lídol 2013</title>
+  <meta name="viewport" content="user-scalable=no, width=device-width">
+  <meta name="HandheldFriendly" content="true">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+
+<body>
+  <div id="outer">
+    {{> leaderboard}}
+  </div>
+</body>
+
+<template name="leaderboard">
+  <ol class="leaderboard">
+    {{#each players}}
+      {{> player}}
+    {{/each}}
+  </ol>
+
+  {{#if voting_player_name}}
+  <div class="details">
+      <div class="name">{{voting_player_name}}</div>
+      <img class="done" src="images/lidol{{voting_player_number}}.jpg">
+      <div class="points">
+          <small>gefur</small><br>
+          {{current_points}} stig
+      </div>
+    <img class="lidol" src="images/lidol-logo.png">
+  </div>
+  {{/if}}
+
+  {{#unless selected_name}}
+  <div class="details">
+    <img class="lidol" src="images/lidol-logo.png">
+  </div>
+  {{/unless}}
+</template>
+
+<template name="player">
+  <li class="player {{selected}}">
+    <img src="images/lidol{{number}}.jpg">
+    <span class="name">{{name}}</span>
+    <div class="title">Lag: {{title}}</div>
+    <span class="score">{{score}} stig</span>
+    {{#if points_given}}
+    <span class="given">({{points_given}})</span>
+    {{/if}}
+  </li>
+</template>
+

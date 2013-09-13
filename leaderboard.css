@@ -1,0 +1,50 @@
+@import "http://assets.l.is/css/structure/fonts.css";
+
+body {
+    background-color: #ef6c1c;
+    color: #fff;
+    font-family: 'lagora-sans', Helvetica, Arial, sans-serif;
+    font-weight: 200;
+    margin: 0;
+    padding: 0;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none
+}
+
+.leaderboard{float:left;margin:0;width:65%}
+.player{cursor:pointer;padding:5px;font-size:1.5em;font-weight:700;margin:0;padding:0;padding-left:-10px;position:relative;margin-left:950px;height:97px;width:400px}
+.player.selected{opacity:.4;-moz-opacity:.4;filter:alpha(opacity=4)}
+
+@media only screen and (min-device-width:1200px) {
+    .player:nth-child(-n+5){font-size:46px;height:215px;margin-left:30px;width:865px}
+    .player:nth-child(-n+5) img{display:block;float:right;height:215px}
+    .player:nth-child(-n+5) .score{position:inherit}
+    .player:nth-child(6){margin-top:-1070px}
+    .player:nth-child(-n+5) .given{float:right;font-size:1.1em;margin-right:10px;position:static}
+}
+
+.player .name{font-size:1.1em;text-shadow:2px 2px #fc5e1c}
+.player .title{font-size:.7em;font-weight:400}
+.player .score{font-size:1.1em;font-weight:700;position:absolute;top:0;right:0}
+.player .given{position:absolute;top:29px;right:0;font-size:.7em}
+.player img{display:none}
+.details{float:right;font-family:'lagora-slab';font-weight:700;font-size:2em;margin-right:30px;padding:10px;text-shadow:2px 2px #fc5e1c;width:420px}
+.details img{width:400px}
+.details .points{font-size:3em;text-align:center}
+.details .name{font-size:1.5em;margin:10px 0}
+.details .lidol{position:absolute;bottom:20px}
+.current{display:inline-block;padding:5px 15px}
+
+@media only screen and (min-device-width:768px) and (max-device-width:1024px) {
+    body{font-size:.7em}
+    .leaderboard{width:420px}
+    .player{border-bottom:1px dashed #fff;margin-top:5px;margin-left:0;height:50px;width:300px}
+    .player:nth-child(-n+5){width:300px}
+    .player:nth-child(-n+5) img{display:none}
+    .details{width:220px}
+    .details img{width:200px}
+    .details .lidol{display:none}
+}
