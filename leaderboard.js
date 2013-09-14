@@ -13,7 +13,7 @@ if (Meteor.isClient) {
 
     for (var i = 0; i < player.voted.length; i++)
       if (!player.voted[i].player)
-        return i
+        return i;
   };
 
   Template.leaderboard.players = function () {
@@ -81,7 +81,9 @@ if (Meteor.isClient) {
       // Select player that is going to start voting.
       if (!player) {
         player = this;
-        /*if (player.voted.length === 0) {
+
+        // Recover if all votes have been removed.
+        if (player.voted.length === 0) {
           var points = [];
           for (var i = 0; i < pointsPerPlayer.length; i++) {
             points.push({
@@ -93,7 +95,8 @@ if (Meteor.isClient) {
           Players.update(player._id, {
             $set: { voted: points }
           });
-        }*/
+        }
+
         player.voting = true;
         Players.update(player._id, {
           $set: { voting: player.voting }
