@@ -153,27 +153,61 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
     if (Players.find().count() === 0) {
       var player,
-        names = ["Iceland",
-                   "England",
-                   "Ireland",
-                   "Denmark",
-                   "Sweden",
-                   "Norway",
-                   "Finland",
-                   "France",
-                   "Germany",
-                   "Spain",
-                   "Russia",
-                   "Italy",
-                   "Netherlands",
-                   "Azerbaijan",
-                   "Greece",
-                   "Malta"];
+        info = [{
+            name: "Iceland",
+            title: "Number 1"
+          }, {
+            name: "England",
+            title: "Number 2"
+          }, {
+            name: "Ireland",
+            title: "Number 3"
+          }, {
+            name: "Denmark",
+            title: "Number 4"
+          }, {
+            name: "France",
+            title: "Number 5"
+          }, {
+            name: "Germany",
+            title: "Number 6"
+          }, {
+            name: "Spain",
+            title: "Number 7"
+          }, {
+            name: "Russia",
+            title: "Number 8"
+          }, {
+            name: "Italy",
+            title: "Number 9"
+          }, {
+            name: "Netherlands",
+            title: "Number 10"
+          }, {
+            name: "Azerbaijan",
+            title: "Number 11"
+          }, {
+            name: "Greece",
+            title: "Number 12"
+          }, {
+            name: "Malta",
+            title: "Number 13"
+          }, {
+            name: "Sweden",
+            title: "Number 14"
+          }, {
+            name: "Norway",
+            title: "Number 15"
+          }, {
+            name: "Finland",
+            title: "Number 16"
+          }
+        ];
 
-      for (var i = 0; i < names.length; i++) {
+      for (var i = 0; i < info.length; i++) {
         player = {
-          name: names[i],
-          title: 'The best song ' + (i + 1),
+          name: info[i].name,
+          title: info[i].title,
           number: i + 1,
           score: 0,
           voted: []
