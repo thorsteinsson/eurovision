@@ -23,7 +23,7 @@ if (Meteor.isClient) {
   Template.leaderboard.current_points = function () {
     var player = Players.findOne({ voting: true }),
       index = nextIndex();
-    return index >= 0 ? player.voted[b].points : 0
+    return index >= 0 ? player.voted[index].points : 0
   };
 
   Template.leaderboard.voting_player_name = function () {
@@ -52,26 +52,36 @@ if (Meteor.isClient) {
     if (!player)
       return;
 
-    for (var i = 0; i < player.voted.length; b++)
+    for (var i = 0; i < player.voted.length; i++)
       if (player.voted[i].player == this._id)
         return player.voted[i].points
   };
 
   Template.leaderboard.events({
     'click .done': function () {
-      Players.update({ voting: true }, { $set: { voting: false }});
+      var player = Players.findOne({ voting: true });
+      Players.update(player._id, {
+        $set: { voting: false }
+      });
     }
   });
 
   Template.player.events({
     'click': function () {
       var player = Players.findOne({ voting: true });
-      if (player == this._id)
-        return;
 
+      // Deselect if selected is pressed.
+      if (player && player._id == this._id) {
+        Players.update(player._id, {
+          $set: { voting: false }
+        });
+        return;
+      }
+
+      // Select player that is going to start voting.
       if (!player) {
         player = this;
-        if (player.voted.length === 0) {
+        /*if (player.voted.length === 0) {
           var points = [];
           for (var i = 0; i < pointsPerPlayer.length; i++) {
             points.push({
@@ -83,7 +93,7 @@ if (Meteor.isClient) {
           Players.update(player._id, {
             $set: { voted: points }
           });
-        }
+        }*/
         player.voting = true;
         Players.update(player._id, {
           $set: { voting: player.voting }
@@ -92,24 +102,30 @@ if (Meteor.isClient) {
       }
 
       for (var x = 0; x < player.voted.length; x++) {
-        // deselect if pressed again
-        if (player.voted[x].player == this._id) {
-          player.voted[x].player = null;
-          Players.update(player._id, { $set: { voted: player.voted }});
+        var vote = player.voted[x];
+
+        // Remove points if pressed again.
+        if (vote.player == this._id) {
+          vote.player = null;
+          Players.update(player._id, {
+            $set: { voted: player.voted }
+          });
           Players.update(this._id, {
-            $inc: { score: -player.voted[x].points }
+            $inc: { score: -vote.points }
           });
           return;
         }
 
-        if (!player.voted[x].player) {
-          player.voted[x].player == this._id;
+        // Is vote not taken?
+        if (!vote.player) {
+          vote.player = this._id;
           Players.update(player._id, {
             $set: { voted: player.voted }
           }),
           Players.update(this._id, {
-            $inc: { score: player.voted[x].points}
+            $inc: { score: vote.points }
           });
+          return;
         }
       }
     }
