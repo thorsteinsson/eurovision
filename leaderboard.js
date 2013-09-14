@@ -23,7 +23,20 @@ if (Meteor.isClient) {
   Template.leaderboard.current_points = function () {
     var player = Players.findOne({ voting: true }),
       index = nextIndex();
-    return index >= 0 ? player.voted[index].points : 0
+    return index >= 0 ? player.voted[index].points : 0;
+  };
+
+  Template.leaderboard.points_left = function () {
+    var player = Players.findOne({ voting: true }),
+      points = [];
+
+    for (var i = 0; i < player.voted.length; i++) {
+      if (!player.voted[i].player) {
+        points.push(player.voted[i].points);
+      }
+    }
+    console.log(points);
+    return points;
   };
 
   Template.leaderboard.voting_player_name = function () {
@@ -140,18 +153,28 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
     if (Players.find().count() === 0) {
       var player,
-        names = ["Ada Lovelace",
-                   "Grace Hopper",
-                   "Marie Curie",
-                   "Carl Friedrich Gauss",
-                   "Nikola Tesla",
-                   "Claude Shannon"];
+        names = ["Iceland",
+                   "England",
+                   "Ireland",
+                   "Denmark",
+                   "Sweden",
+                   "Norway",
+                   "Finland",
+                   "France",
+                   "Germany",
+                   "Spain",
+                   "Russia",
+                   "Italy",
+                   "Netherlands",
+                   "Azerbaijan",
+                   "Greece",
+                   "Malta"];
 
       for (var i = 0; i < names.length; i++) {
         player = {
           name: names[i],
-          title: 'Lag ' + i,
-          number: i,
+          title: 'The best song ' + (i + 1),
+          number: i + 1,
           score: 0,
           voted: []
         };
